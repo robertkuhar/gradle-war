@@ -11,18 +11,30 @@ repositories {
 }
 
 dependencies {
-    compile 'org.slf4j:slf4j-api:1.7.21'
-    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.7'
+    compile 'org.slf4j:slf4j-api:1.7.25'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
 
-    testCompile group: 'org.testng', name: 'testng', version: '6.9.10'
+    testCompile group: 'org.testng', name: 'testng', version: '6.9.13.6'
 }
 
 test {
-    useTestNG()
+    testLogging {
+        // show standard out and standard error of the test JVM(s) on the console
+        showStandardStreams = true
+        exceptionFormat = 'full'
+    }
+    useTestNG() {
+        excludeGroups 'integration'
+    }
 }
 
 task integrationTest(type: Test, dependsOn: 'test') {
+    testLogging {
+        // show standard out and standard error of the test JVM(s) on the console
+        showStandardStreams = true
+        exceptionFormat = 'full'
+    }
     useTestNG() {
-      includeGroups 'integration'
+        includeGroups 'integration'
     }
 }
