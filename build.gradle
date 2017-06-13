@@ -21,6 +21,10 @@ dependencies {
     testCompile group: 'org.testng', name: 'testng', version: '6.9.13.6'
 }
 
+war {
+    archiveName 'gradle-war.war'
+}
+
 test {
     testLogging {
         // show standard out and standard error of the test JVM(s) on the console
