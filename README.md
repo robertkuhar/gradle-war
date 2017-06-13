@@ -32,3 +32,5 @@ The Jetty plugin has been deprecated and is scheduled to be removed in Gradle 4.
 > :jettyRun > Running at http://localhost:8080/gradle-war
 ```
 
+
+TODO:  Overcome the Jetty plugin deprecation
