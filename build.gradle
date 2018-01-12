@@ -1,14 +1,26 @@
+buildscript {
+    repositories {
+        jcenter()
+        // enable this to use snapshot versions of Gretty:
+        // maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local' }
+    }
+
+    dependencies {
+        classpath 'org.akhikhl.gretty:gretty:+'
+    }
+}
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'war'
-apply plugin: 'jetty'
+apply plugin: 'org.akhikhl.gretty'
 
 version = "1.1"
 
 defaultTasks 'clean', 'build'
 
-repositories { 
+repositories {
     mavenCentral()
 }
 
@@ -19,6 +31,14 @@ dependencies {
     providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
 
     testCompile group: 'org.testng', name: 'testng', version: '6.9.13.6'
+}
+
+gretty {
+    // supported values:
+    // 'jetty7', 'jetty8', 'jetty9', 'jetty93', 'jetty94', 'tomcat7', 'tomcat8'
+    servletContainer = 'jetty9'
+    httpPort = 8080
+    contextPath = '/gradle-war'
 }
 
 war {
