@@ -36,7 +36,13 @@ public class HelloServlet extends HttpServlet {
     LOG.warn("A message at WARN");
     LOG.error("A message at ERROR");
 
+    String x_robert = req.getHeader("x-robert");
+    String msg = String.format("req.getHeader(\"x-robert\"): %s", x_robert);
+
+    LOG.info(msg);
+
     out.println("Hello, world!");
+    out.println(msg);
     out.close();
   }
 }
