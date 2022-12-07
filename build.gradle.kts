@@ -6,7 +6,7 @@ plugins {
     eclipse
     idea
     war
-    id("org.gretty") version "3.1.0"
+    id("org.gretty") version "4.0.3"
 }
 
 repositories {
@@ -20,23 +20,25 @@ defaultTasks("clean", "build")
 
 dependencies {
     implementation("org.slf4j:slf4j-api:2.0.5")
-    implementation(group = "ch.qos.logback", name = "logback-classic", version = "1.2.9")
-    providedCompile(group = "javax.servlet", name = "javax.servlet-api", version = "3.1.0")
-    testImplementation(group = "org.testng", name = "testng", version = "[6.11]")
+    implementation("ch.qos.logback:logback-classic:1.4.5")
+    providedCompile("jakarta.servlet:jakarta.servlet-api:5.0.0")
+    /**
+     * CVE-2022-4065 https://devhub.checkmarx.com/cve-details/CVE-2022-4065
+     * TODO upgrade version when https://github.com/cbeust/testng/pull/2806 will be released
+     */
+    testImplementation("org.testng:testng:7.6.1")
 }
 
 gretty {
-    // supported values:
-    // 'jetty7', 'jetty8', 'jetty9', 'jetty93', 'jetty94', 'tomcat7', 'tomcat8'
-    servletContainer="tomcat9" //Use Jetty7 which is compatible with JDK6
+    servletContainer="jetty11"
     httpPort = 8080
     contextPath = "/gradle-war"
     springBoot = false
 }
 
 java{
-    sourceCompatibility=JavaVersion.VERSION_1_8
-    targetCompatibility=JavaVersion.VERSION_1_8
+    sourceCompatibility=JavaVersion.VERSION_11
+    targetCompatibility=JavaVersion.VERSION_11
 }
 
 tasks.war {
@@ -67,4 +69,8 @@ val integrationTest by tasks.registering(Test::class) {
     useTestNG {
         includeGroups("integration")
     }
+}
+
+tasks.check{
+    dependsOn(integrationTest)
 }
