@@ -22,11 +22,7 @@ dependencies {
     implementation("org.slf4j:slf4j-api:2.0.5")
     implementation("ch.qos.logback:logback-classic:1.4.5")
     providedCompile("jakarta.servlet:jakarta.servlet-api:5.0.0")
-    /**
-     * CVE-2022-4065 https://devhub.checkmarx.com/cve-details/CVE-2022-4065
-     * TODO upgrade version when https://github.com/cbeust/testng/pull/2806 will be released
-     */
-    testImplementation("org.testng:testng:7.6.1")
+    testImplementation("org.testng:testng:7.7.0")
 }
 
 gretty {
